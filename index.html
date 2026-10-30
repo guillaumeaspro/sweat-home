@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Sweat Home, ton coach sportif à la maison : programme selon ta forme, ton temps et ton matériel.">
-<meta name="theme-color" content="#F3F4F8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121318" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F6EFE4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17120F" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Sweat Home">
@@ -19,21 +19,21 @@
 <style>
 /* Layout : une colonne pensée pour le téléphone, barre d'onglets en bas, réglages du jour dans un panneau qui monte, chrono en plein écran. */
 :root{
-  --bg:#F3F4F8; --surface:#FFFFFF; --sunk:#E8EAF1; --ink:#14152B; --muted:#585B70; --line:#D9DCE6;
-  --accent:#4338CA; --accent-soft:#E7E8FB; --on-accent:#FFFFFF; --heat:#C2410C; --heat-soft:#FFEDD5; --rest:#0369A1; --rest-soft:#E0F2FE; --ok:#15803D; --ok-soft:#DCFCE7; --scrim:rgb(20 21 43 / .45);
+  --bg:#F6EFE4; --surface:#FFFCF7; --sunk:#EDE2D2; --ink:#2B2420; --muted:#6B5E55; --line:#E3D5C3;
+  --accent:#B9481E; --accent-soft:#F6DCCD; --on-accent:#FFFFFF; --heat:#B42318; --heat-soft:#FCE1DA; --rest:#1D6A86; --rest-soft:#DCEEF3; --ok:#3B7A33; --ok-soft:#E0EFD8; --scrim:rgb(43 36 32 / .45);
   --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
   --tab-h:64px; --r:16px;
   --body:#2B2E4A; --body-far:#A9ADC6; --work:#F06A1E; --work-far:#F7B48C; --str:#0EA5E9; --str-far:#9ED8F3;
-  --skin:#E9B48E; --skin-d:#C98E68; --shirt:#4F46E5; --shirt-d:#3730A3; --shorts:#2A2C44; --shorts-d:#16172A; --shoe:#14152B; --hair:#4A3426; --ink-face:#1B1310;
+  --skin:#E9B48E; --skin-d:#C98E68; --shirt:#D4582A; --shirt-d:#A6431D; --shorts:#2A2C44; --shorts-d:#16172A; --shoe:#14152B; --hair:#4A3426; --ink-face:#1B1310;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#121318; --surface:#1C1E27; --sunk:#262935; --ink:#ECEDF3; --muted:#A0A3B5; --line:#30333F;
-  --accent:#A5B4FC; --accent-soft:#272B4D; --on-accent:#16163A; --heat:#FDBA74; --heat-soft:#3B2614; --rest:#7DD3FC; --rest-soft:#12303F; --ok:#86EFAC; --ok-soft:#14321F; --scrim:rgb(0 0 0 / .6); --body:#D9DCEE; --body-far:#5B5F7C; --work:#FB8B4A; --work-far:#8C4B2B; --str:#38BDF8; --str-far:#1E5A78; --skin:#E2AC86; --skin-d:#B98662; --shirt:#818CF8; --shirt-d:#5B5FC7; --shorts:#4A4F66; --shorts-d:#33374A; --shoe:#ECEDF3; color-scheme:dark}}
+  --bg:#17120F; --surface:#221B17; --sunk:#2E2520; --ink:#F3EAE0; --muted:#B4A698; --line:#3B302A;
+  --accent:#F08A5D; --accent-soft:#3D2418; --on-accent:#2B1409; --heat:#FF8A73; --heat-soft:#3D1A14; --rest:#7CC4DB; --rest-soft:#12303A; --ok:#9BD38F; --ok-soft:#1C2E18; --scrim:rgb(0 0 0 / .6); --body:#D9DCEE; --body-far:#5B5F7C; --work:#FB8B4A; --work-far:#8C4B2B; --str:#38BDF8; --str-far:#1E5A78; --skin:#E2AC86; --skin-d:#B98662; --shirt:#F08A5D; --shirt-d:#C2643B; --shorts:#4A4F66; --shorts-d:#33374A; --shoe:#ECEDF3; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#121318; --surface:#1C1E27; --sunk:#262935; --ink:#ECEDF3; --muted:#A0A3B5; --line:#30333F;
-  --accent:#A5B4FC; --accent-soft:#272B4D; --on-accent:#16163A; --heat:#FDBA74; --heat-soft:#3B2614; --rest:#7DD3FC; --rest-soft:#12303F; --ok:#86EFAC; --ok-soft:#14321F; --scrim:rgb(0 0 0 / .6); --body:#D9DCEE; --body-far:#5B5F7C; --work:#FB8B4A; --work-far:#8C4B2B; --str:#38BDF8; --str-far:#1E5A78; --skin:#E2AC86; --skin-d:#B98662; --shirt:#818CF8; --shirt-d:#5B5FC7; --shorts:#4A4F66; --shorts-d:#33374A; --shoe:#ECEDF3; color-scheme:dark}
+  --bg:#17120F; --surface:#221B17; --sunk:#2E2520; --ink:#F3EAE0; --muted:#B4A698; --line:#3B302A;
+  --accent:#F08A5D; --accent-soft:#3D2418; --on-accent:#2B1409; --heat:#FF8A73; --heat-soft:#3D1A14; --rest:#7CC4DB; --rest-soft:#12303A; --ok:#9BD38F; --ok-soft:#1C2E18; --scrim:rgb(0 0 0 / .6); --body:#D9DCEE; --body-far:#5B5F7C; --work:#FB8B4A; --work-far:#8C4B2B; --str:#38BDF8; --str-far:#1E5A78; --skin:#E2AC86; --skin-d:#B98662; --shirt:#F08A5D; --shirt-d:#C2643B; --shorts:#4A4F66; --shorts-d:#33374A; --shoe:#ECEDF3; color-scheme:dark}
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -3147,16 +3147,16 @@ const M3D=(()=>{
     const fill=new THREE.DirectionalLight(0xffffff,.28);fill.position.set(200,120,-80);scene.add(fill);
     shadowM=new THREE.Mesh(new THREE.PlaneGeometry(600,600),new THREE.ShadowMaterial({opacity:.22}));shadowM.rotation.x=-Math.PI/2;shadowM.receiveShadow=true;scene.add(shadowM);
     mats={
-      body:new THREE.MeshStandardMaterial({color:0x6f7896,roughness:.45,metalness:.08}),shoe:new THREE.MeshStandardMaterial({color:0x2f3446,roughness:.6}),
+      body:new THREE.MeshStandardMaterial({color:0x8E827A,roughness:.45,metalness:.08}),shoe:new THREE.MeshStandardMaterial({color:0x3A2F29,roughness:.6}),
       work:new THREE.MeshStandardMaterial({color:0xe8590c,roughness:.5,metalness:.02}),
       str:new THREE.MeshStandardMaterial({color:0x3b9cff,roughness:.5,metalness:.02}),
-      joint:new THREE.MeshStandardMaterial({color:0x5f6885,roughness:.5}),
+      joint:new THREE.MeshStandardMaterial({color:0x7C7069,roughness:.5}),
       prop:new THREE.MeshStandardMaterial({color:0x9aa1b8,roughness:.7}),
       wood:new THREE.MeshStandardMaterial({color:0xc9a77c,roughness:.75}),
       dark:new THREE.MeshStandardMaterial({color:0x3a3f52,roughness:.45,metalness:.3}),
       ball:new THREE.MeshStandardMaterial({color:0x6d7cff,roughness:.4}),
       band:new THREE.MeshStandardMaterial({color:0x22c55e,roughness:.6}),
-      mat:new THREE.MeshStandardMaterial({color:0x5b5fc7,roughness:.9}),
+      mat:new THREE.MeshStandardMaterial({color:0xC97B5A,roughness:.9}),
       wall:new THREE.MeshStandardMaterial({color:0xe7e9f2,roughness:.95})
     };
     root=new THREE.Group();scene.add(root);
