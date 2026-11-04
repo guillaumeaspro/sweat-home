@@ -1739,7 +1739,7 @@ function csNeeds(s){const miss=new Set();s.blocks.forEach(b=>b.items.forEach(sp=
 let TMODE=null;try{TMODE=localStorage.getItem(KEY+'-tmode')}catch(e){}
 function renderMode(){
   const m=TMODE||(S.prog?'prog':'libre');
-  $('tmode').innerHTML=`<button role="tab" data-tmode="prog" aria-pressed="${m==='prog'}"><b>Mon programme</b><small>Ta séance du jour</small></button><button role="tab" data-tmode="libre" aria-pressed="${m==='libre'}"><b>Séance libre</b><small>Tout de suite, au choix</small></button>`;
+  $('tmode').innerHTML=`<button role="tab" data-tmode="prog" aria-pressed="${m==='prog'}"><b>Mon programme</b><small>Semaine après semaine</small></button><button role="tab" data-tmode="libre" aria-pressed="${m==='libre'}"><b>Séance libre</b><small>Une séance, tout de suite</small></button>`;
   $('progPart').hidden=m!=='prog';$('librePart').hidden=m!=='libre'}
 // ---------- séance express : une séance tout de suite, sans passer par le programme ----------
 const QF=[['full','Tout le corps'],['haut','Haut du corps'],['bas','Jambes et fessiers'],['abdos','Abdos'],['cardio','Cardio'],['mobilite','Étirements']];
