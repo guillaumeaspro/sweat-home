@@ -93,7 +93,11 @@ h1 span{color:var(--accent)}
 /* Séance */
 .hero{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 16px 16px;display:flex;flex-direction:column;gap:12px}
 .hero h2{font-family:var(--f-display);font-size:clamp(38px,11vw,48px);line-height:.95;font-weight:800;text-transform:uppercase;margin:0;text-wrap:balance}
-.quick{margin-bottom:12px}.quick>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px}.quick>summary::-webkit-details-marker{display:none}.quick>summary b{display:flex;align-items:center;gap:8px;white-space:nowrap}.quick>summary .hint{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.quick>summary b svg{width:12px;height:12px;fill:var(--accent)}.quick[open]>summary .chev{transform:rotate(180deg)}.quick .qb{display:flex;flex-direction:column;gap:10px;margin-top:12px}.quick .chips{gap:6px}.qrow{display:grid;grid-template-columns:1fr;gap:8px}.quick .qx{margin:0;min-height:20px}.quick .row2{display:grid;grid-template-columns:1.4fr 1fr;gap:8px}.quick .cta{margin:0}
+.tmode{margin:2px 0 14px;padding:4px;border-radius:16px}.tmode button{display:flex;flex-direction:column;align-items:center;gap:1px;min-height:58px;border-radius:13px}
+.tmode button b{font-size:16px;color:var(--ink)}.tmode button small{font-size:12px;font-weight:600;color:var(--muted)}
+#tmode button[aria-pressed="true"]{background:var(--accent);box-shadow:0 2px 8px rgb(0 0 0/.12)}#tmode button[aria-pressed="true"] b,#tmode button[aria-pressed="true"] small{color:var(--on-accent)}
+#librePart>#quick>.blk-h{margin-top:0}
+.quick{margin-bottom:18px}.quick>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px}.quick>summary::-webkit-details-marker{display:none}.quick>summary b{display:flex;align-items:center;gap:8px;white-space:nowrap}.quick>summary .hint{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.quick>summary b svg{width:12px;height:12px;fill:var(--accent)}.quick[open]>summary .chev{transform:rotate(180deg)}.quick .qb{display:flex;flex-direction:column;gap:10px}.quick .chips{gap:6px}.qrow{display:grid;grid-template-columns:1fr;gap:8px}.quick .qx{margin:0;min-height:20px}.quick .row2{display:grid;grid-template-columns:1.4fr 1fr;gap:8px}.quick .cta{margin:0}
 .coachs{display:flex;flex-direction:column;gap:10px;margin-top:8px}
 .coach .co-h{display:grid;gap:2px}.coach .co-h small{font-weight:500;color:var(--muted);font-size:13px}
 .co-s{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px}
@@ -536,12 +540,17 @@ h1 span{color:var(--accent)}
 <main class="wrap">
   <section class="view" id="v-today" aria-label="Séance">
     <button class="moti" id="moti" data-tab="progress" aria-label="Voir mes progrès"></button>
-    <div id="quick"></div>
+    <div class="seg tmode" id="tmode" role="tablist" aria-label="Type de séance"></div>
+    <div id="progPart">
     <div class="daystrip" id="dayStrip" role="tablist" aria-label="Jour"></div>
     <button class="daycard" id="dayCard" data-open="sheet" aria-haspopup="dialog"></button>
     <div class="acts" id="dayActs"></div>
     <div class="view" id="session" style="padding:0"></div>
+    </div>
+    <div id="librePart">
+    <div id="quick"></div>
     <div id="coachs"></div>
+    </div>
   </section>
 
   <section class="view" id="v-week" hidden aria-label="Semaine">
@@ -1718,7 +1727,7 @@ function render(){
   $('hdrRing').innerHTML=`<div style="text-align:right"><b>${doneN}/${active.length}</b><small>faites</small></div><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="trk" cx="20" cy="20" r="16" fill="none" stroke-width="5"/><circle class="val" cx="20" cy="20" r="16" fill="none" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-fr)}"/></svg>`;
   VIEWS.forEach(v=>{$('v-'+v).hidden=v!==tab});
   document.querySelectorAll('.tab').forEach(b=>b.dataset.tab===tab?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
-  renderToday(gens);renderQuick();renderCoachs();renderWeek(gens,active,doneN);renderGear();renderSheet();renderProgress();
+  renderMode();renderToday(gens);renderQuick();renderCoachs();renderWeek(gens,active,doneN);renderGear();renderSheet();renderProgress();
   markLive();
 }
 
@@ -1726,6 +1735,12 @@ function render(){
 // ---------- Séances des coachs YouTube ----------
 const COPEN=new Set();
 function csNeeds(s){const miss=new Set();s.blocks.forEach(b=>b.items.forEach(sp=>{const a=Array.isArray(sp)?sp:[sp],x=DB.find(e=>e.n===a[0]);if(x&&!eqOk(x)&&!a[2])x.e.forEach(k=>miss.add(EQNAME[k]))}));return[...miss]}
+// ---------- deux façons de s'entraîner : son programme, ou une séance libre ----------
+let TMODE=null;try{TMODE=localStorage.getItem(KEY+'-tmode')}catch(e){}
+function renderMode(){
+  const m=TMODE||(S.prog?'prog':'libre');
+  $('tmode').innerHTML=`<button role="tab" data-tmode="prog" aria-pressed="${m==='prog'}"><b>Mon programme</b><small>Ta séance du jour</small></button><button role="tab" data-tmode="libre" aria-pressed="${m==='libre'}"><b>Séance libre</b><small>Tout de suite, au choix</small></button>`;
+  $('progPart').hidden=m!=='prog';$('librePart').hidden=m!=='libre'}
 // ---------- séance express : une séance tout de suite, sans passer par le programme ----------
 const QF=[['full','Tout le corps'],['haut','Haut du corps'],['bas','Jambes et fessiers'],['abdos','Abdos'],['cardio','Cardio'],['mobilite','Étirements']];
 let QOPEN=null;
@@ -1742,17 +1757,16 @@ function renderQuick(){
   const el=$('quick');if(!el)return;const o=S.qk,g=quickGen();
   const names=[...new Set(g.blocks.filter(b=>b.t!=='Échauffement'&&b.t!=='Retour au calme').flatMap(b=>b.items.map(it=>it.x.n)))];
   const chip=(k,v,cur,l)=>`<button class="chip" data-qk="${k}|${v}" aria-pressed="${cur===v}">${l}</button>`;
-  const op=QOPEN===null?!S.prog:QOPEN;
-  el.innerHTML=`<details class="card quick" id="qkd"${op?' open':''}><summary class="sh"><b>${PLAYI} Séance express</b><span class="hint" style="margin-left:auto">${op?'sans programme':esc(QF.find(q=>q[0]===o.focus)[1])+' · '+o.t+' min'}</span>${CHEV}</summary><div class="qb">
+  el.innerHTML=`<div class="blk-h"><h3>Séance express</h3></div><section class="card quick"><div class="qb">
     <div class="chips">${QF.map(([v,l])=>chip('focus',v,o.focus,l)).join('')}</div>
     <div class="qrow"><div class="seg">${QT.map(t=>`<button data-qk="t|${t}" aria-pressed="${o.t===t}">${t} min</button>`).join('')}</div>
     <div class="seg">${QI.map(([v,l])=>`<button data-qk="f|${v}" aria-pressed="${o.f===v}">${l}</button>`).join('')}</div></div>
     <p class="hint qx">${names.slice(0,6).map(esc).join(' · ')}${names.length>6?' …':''}</p>
     <div class="row2"><button class="cta" data-qkgo="1">${PLAYI}Lancer · ${g.total} min</button><button class="btn" data-qk="seed|+">${REGEN}Autres exercices</button></div>
-    <p class="hint" style="margin:0">Avec ton matériel (onglet Matériel). La séance compte dans tes progrès du jour.</p></div></details>`}
+    <p class="hint" style="margin:0">Avec ton matériel (onglet Matériel). La séance compte dans tes progrès du jour.</p></div></section>`}
 function renderCoachs(){
   const el=$('coachs');if(!el)return;
-  el.innerHTML=`<section class="coachs"><div class="blk-h"><h3>Séances des coachs</h3><span>${Object.keys(CSBYID).length} séances</span></div>
+  el.innerHTML=`<section class="coachs"><div class="blk-h"><h3>Ou une séance de coach</h3><span>${Object.keys(CSBYID).length} séances</span></div>
   <p class="hint" style="padding:0 4px">Reprises de vidéos YouTube : même ordre, mêmes exercices, mêmes temps d'effort et de récup. Si ton matériel manque, l'exercice est remplacé.</p>
   ${COACHS.map(c=>`<details class="card more coach" data-coach="${c.id}"${COPEN.has(c.id)?' open':''}><summary><span class="co-h"><b>${esc(c.n)}</b><small>${esc(c.st)}</small></span>${CHEV}</summary>
     ${c.sessions.map(s=>{const g=csBuild(s),miss=csNeeds(s),names=g.blocks.map(b=>`<li><b>${esc(b.t)}</b> <span class="hint">${esc(b.fmt)}</span><br>${b.items.map(it=>esc(it.x.n)).join(' · ')}</li>`).join('');
@@ -3718,6 +3732,7 @@ function markLive(){
   if(T&&!T.done&&!T.pause&&T.day===sel&&!T.cs){const l=document.querySelector(`#session [data-li="${T.b}-${T.i}"]`);if(l)l.classList.add('live')}
 }
 function onTimerClick(b){
+  if(b.dataset.tmode){TMODE=b.dataset.tmode;try{localStorage.setItem(KEY+'-tmode',TMODE)}catch(e){}renderMode();scrollTo(0,0);return true}
   if(b.dataset.qk){const[k,v]=b.dataset.qk.split('|');if(k==='seed')S.qk.seed=(S.qk.seed||0)+1;else S.qk[k]=k==='focus'?v:+v;save();renderQuick();return true}
   if(b.dataset.qkgo){if(T&&!T.done)stopTimer();startTimer(TODAY,0,0,quickGen());T.min=false;showTimer();render();return true}
   if(b.dataset.cs){const s=CSBYID[b.dataset.cs];if(!s)return true;if(T&&!T.done)stopTimer();startTimer(TODAY,0,0,csBuild(s));T.min=false;showTimer();render();return true}
